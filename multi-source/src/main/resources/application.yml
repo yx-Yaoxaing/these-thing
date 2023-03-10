@@ -22,7 +22,7 @@ spring:
     slave1:
       driverClassName: com.mysql.cj.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
-      jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      jdbc-url: jdbc:mysql://xxxxx:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: 'YX19980904'
 
