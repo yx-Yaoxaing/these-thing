@@ -1,5 +1,5 @@
 server:
-  port: 8585
+  port: 55655
 
 # MyBatis配置
 mybatis:
@@ -8,7 +8,7 @@ mybatis:
   # 加载全局的配置文件
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # mysql配置
 spring:
@@ -25,22 +25,3 @@ spring:
       jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: 'YX19980904'
-
-
-# jpa 配置
---- #
-spring:
-  jpa:
-    # 设置hibernate方言,对应mysql的版本，解决mysql与hibernate版本不对应问题
-    database-platform: org.hibernate.dialect.MySQL55Dialect
-    # 打印sql
-    show-sql: true
-    database: mysql
-    # 是指延时加载的一些属性数据，可以在页面展现的时候，保持session不关闭，从而保证能在页面进行延时加载。
-    open-in-view: false
-    hibernate:
-      # 每次运行程序，没有表时会创建表，如果对象发生改变会更新表结构，原有数据不会清空，只会更新
-      # 逆向工程 也就是先有实体 在生成表
-      # 由于ddl-auto不能同时指定多个属性， 只能在create, create-drop, update, validate, none中选择一个属性
-      ddl-auto: update
-
