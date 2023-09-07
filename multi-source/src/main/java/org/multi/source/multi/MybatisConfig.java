@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisConfig {
 
-    @Bean
-    public Interceptor readWriteSeparatePlugin(){
-        return new ReadWriteSeparatePlugin();
-    }
+//    @Bean
+//    public Interceptor readWriteSeparatePlugin(){
+//        return new ReadWriteSeparatePlugin();
+//    }
 
 }

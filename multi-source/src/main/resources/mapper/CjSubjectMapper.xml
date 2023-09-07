@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.multi.source.mapper.CjSubjectMapper">
+
+
+    <insert id="save">
+        insert into cj_subject values
+         (
+            #{subjectName},
+            #{pid},
+            #{type}
+         )
+    </insert>
+    <select id="findBySujectName" resultType="java.lang.Boolean">
+        select count(*) from cj_subject where subject_name#{subjectName}
+    </select>
+    <select id="findIdBySujectName" resultType="java.lang.Long">
+        select id from cj_subject where subject_name#{subjectName}
+    </select>
+</mapper>

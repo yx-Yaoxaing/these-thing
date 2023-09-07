@@ -9,7 +9,13 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <!--多数据源-->
         <module>multi-source</module>
+        <!--分库分表-->
+        <module>database-sharding</module>
+        <!--mybatis实现多数据源分布式事务-->
+        <module>multi-source-mybatis</module>
+        <module>multi-source-mybatis</module>
     </modules>
 
     <properties>
@@ -17,7 +23,14 @@
         <maven.compiler.target>8</maven.compiler.target>
         <mybatis.version>2.2.2</mybatis.version>
         <lombok.version>1.18.24</lombok.version>
+        <spring.boot.version>2.7.1</spring.boot.version>
+        <docker.test.username>wangkejun</docker.test.username>
+        <docker.test.password>Hlw@123456780</docker.test.password>
     </properties>
+
+
+
+
 
     <!--依赖管理 这里面不会在父级项目中下载依赖 -->
     <dependencyManagement>
@@ -26,7 +39,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.7.1</version>
+                <version>${spring.boot.version}</version>
                 <!---->
                 <scope>import</scope>
                 <!---->

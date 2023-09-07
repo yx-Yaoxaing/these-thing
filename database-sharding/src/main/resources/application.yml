@@ -10,18 +10,61 @@ mybatis:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+
 # mysql配置
+#spring:
+#  datasource:
+#    ds_1:
+#      driverClassName: com.mysql.cj.jdbc.Driver
+#      type: com.zaxxer.hikari.HikariDataSource
+#      jdbc-url: jdbc:mysql://127.0.0.1:3306/multi-source-01?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#      username: root
+#      password: 'root'
+#    ds_2:
+#      driverClassName: com.mysql.cj.jdbc.Driver
+#      type: com.zaxxer.hikari.HikariDataSource
+#      jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#      username: root
+#      password: 'YX19980904'
+
+--- # 分库分表
 spring:
-  datasource:
-    master:
-      driverClassName: com.mysql.cj.jdbc.Driver
-      type: com.zaxxer.hikari.HikariDataSource
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/multi-source-01?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-      username: root
-      password: 'root'
-    slave1:
-      driverClassName: com.mysql.cj.jdbc.Driver
-      type: com.zaxxer.hikari.HikariDataSource
-      jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
-      username: root
-      password: 'YX19980904'
+  shardingsphere:
+    datasource:
+      enabled: true
+      names: db-master-01,db-master-02
+      db-master-01:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:mysql://127.0.0.1:3306/multi-source-01?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+        username: root
+        password: 'root'
+      db-master-02:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        type: com.zaxxer.hikari.HikariDataSource
+        jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+        username: root
+        password: 'YX19980904'
+    props:
+      # 日志显示
+      sql-show: true
+    sharding:
+      tables:
+        # 逻辑表
+        ms_order_info:
+          # 真实表
+          actualDataNodes: db-master-0$->{1..2}.ms_order_info$->{1..6}
+          # 分库策略
+          databaseStrategy:
+            inline:
+              sharding-column: id
+              algorithm-expression: db-master-$->{id % 2}
+          # 分表策略
+          tableStrategy:
+            inline:
+              shardingColumn: id
+              algorithmExpression: ms_order_info_$->{id % 6}
+
+
+
+

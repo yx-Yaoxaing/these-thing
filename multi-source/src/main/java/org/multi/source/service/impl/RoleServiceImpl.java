@@ -10,19 +10,20 @@ import java.util.UUID;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    @Autowired
-    private RoleDao roledao;
+//    @Autowired(required = false)
+//    private RoleDao roledao;
 
 
     @Override
     public void save() {
         Role role = new Role();
         role.setRoleName(UUID.randomUUID().toString());
-        roledao.save(role);
+       // roledao.save(role);
     }
 
     @Override
     public Role findById(Integer id) {
-        return roledao.findById(id).orElse(new Role());
+        //return roledao.findById(id).orElse(new Role());
+        return null;
     }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.multi.source.mapper.UserMapper">
+<mapper namespace="org.multi.source.mapper.slave.UserMapper">
 
     <insert id="save" parameterType="org.multi.source.pojo.MsUser">
         insert
@@ -20,8 +20,38 @@
           #{age}
          )
     </insert>
+    <insert id="saveScData">
+        INSERT INTO `sc_data`.`sc_data` (`name`) VALUES ( #{name});
+    </insert>
     <select id="findById" resultType="org.multi.source.pojo.MsUser">
-        select  * from ms_user where id=#{id}
+        select  * from ms_user where id=#{id5}
+    </select>
+
+    <select id="findByUserNameAndAge" resultType="org.multi.source.pojo.MsUser">
+        select  * from ms_user where user_name=#{name} and age=#{age}
+    </select>
+
+
+    <select id="findByUserNames" resultType="org.multi.source.pojo.MsUser">
+        select * from ms_user
+        <where>
+            <foreach item="val" index="index" collection="list1"
+                     open="user_name in (" separator="," close=")" nullable="true">
+                #{val}
+            </foreach>
+        </where>
+
+    </select>
+
+    <select id="findByUserNamesAndAge" resultType="org.multi.source.pojo.MsUser">
+        select * from ms_user
+        <where>
+            <foreach item="val" index="index" collection="param1"
+                     open="user_name in (" separator="," close=")" nullable="true">
+                #{val}
+            </foreach>
+             and age = #{param2}
+        </where>
     </select>
 
 

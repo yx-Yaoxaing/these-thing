@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.database.shard.mapper.OrderMapper">
+
+
+    <insert id="addOrder">
+        INSERT INTO ms_order_info_1 (
+            `id`,
+            `user_id`,
+            `order_name`,
+            `create_time`
+        )
+        VALUES
+            (
+                #{id}, #{userId}, #{orderName}, #{createTime});
+    </insert>
+</mapper>

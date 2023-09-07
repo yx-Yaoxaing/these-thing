@@ -51,13 +51,14 @@ public class Sharddelivery<T> implements DatabaseShardTableDivisionAlgorithm {
 
     @Override
     public int executorTable() {
-        int index = 0;
-        if (indexParam instanceof String) {
-            index = (indexParam.hashCode()) & (tableTotal - 1);
-        } else if (indexParam instanceof Number) {
-            index = ((int)indexParam) & (tableTotal - 1);
-        }
-        return index;
+//        int index = 0;
+//        if (indexParam instanceof String) {
+//            index = (indexParam.hashCode()) & (tableTotal - 1);
+//        } else if (indexParam instanceof Number) {
+//            index = ((int)indexParam) & (tableTotal - 1);
+//        }
+//        return index;
+        return 0;
     }
 
 

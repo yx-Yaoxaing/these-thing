@@ -9,7 +9,6 @@ import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.context.annotation.Configuration;
-
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -19,7 +18,7 @@ import java.lang.reflect.Parameter;
  * db_
  * table_
  */
-@Configuration
+
 @Intercepts({ @Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }),
         @Signature(type = Executor.class, method = "query", args = { MappedStatement.class, Object.class, RowBounds.class,
                 ResultHandler.class }) })
@@ -34,7 +33,7 @@ public class MybatisDataSourceConfig implements Interceptor {
         BoundSql boundSql = mappedStatements.getBoundSql(parameters);
         String sql = boundSql.getSql();
 
-        DynamicDataSourceContentHodler.set("");
+
 
         return null;
     }

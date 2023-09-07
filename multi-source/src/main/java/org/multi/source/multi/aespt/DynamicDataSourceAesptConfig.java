@@ -10,9 +10,9 @@ import org.multi.source.multi.DynamicDataSourceContextHolder;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
-@Aspect
-@EnableAspectJAutoProxy
-@Component
+//@Aspect
+//@EnableAspectJAutoProxy
+//@Component
 public class DynamicDataSourceAesptConfig {
 
     /**

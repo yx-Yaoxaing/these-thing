@@ -14,6 +14,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <fileName>multi-source</fileName>
     </properties>
 
     <dependencies>
@@ -46,7 +47,112 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>3.141.59</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.5.12</version>
+        </dependency>
+        <!-- Spring Boot Starter Test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <!-- jsoup HTML parser library @ https://jsoup.org/ -->
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.14.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>2.0.22</version>
+        </dependency>
+        <!--JTA组件核心依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jta-atomikos</artifactId>
+        </dependency>
+
 
     </dependencies>
+
+
+
+
+
+    <build>
+        <plugins>
+            <!-- maven打包 可执行的jar文件-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <!-- repackage目标的作用是将项目打包为可执行的jar文件 -->
+                <!-- 这里为什么要使用这个 因为父级项目中使用的spring-boot-dependencies
+                 而不是spring-boot-starter-parent ，spring-boot-starter-parent中采用了repackage 但是
+                 spring-boot-dependencies 没有引入插件 所以这里需要手动导入-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--打包后的名字-->
+                    <finalName>multi-source</finalName>
+                </configuration>
+            </plugin>
+
+            <!--docker file打包 推送镜像-->
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>1.4.13</version>
+                    <!--具体来说，build 和 push 是该插件提供的两个目标（goal），
+                    用于执行构建和推送 Docker 镜像的操作。
+                    在这段配置中，build 和 push 都被包含在了一个执行（execution）中，
+                    该执行的 ID 是 default-->
+                    <executions>
+                        <execution>
+                            <id>default</id>
+                            <goals>
+                                <!-- 构建镜像 -->
+                                <goal>build</goal>
+                                <!-- 推送镜像 -->
+                                <goal>push</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <repository>10.3.192.39:8777/test-dockerfile-push/server</repository>
+                        <tag>1.4</tag>
+                        <buildArgs>
+                            <JAR_FILE>${fileName}.jar</JAR_FILE>
+                            <SERVER_ID>hlwtest</SERVER_ID>
+                        </buildArgs>
+                        <!--使用maven setting 作为配置授权文件-->
+                        <useMavenSettingsForAuth>true</useMavenSettingsForAuth>
+                    </configuration>
+                </plugin>
+
+
+        </plugins>
+    </build>
+
+
 
 </project>

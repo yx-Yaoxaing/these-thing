@@ -1,5 +1,5 @@
 server:
-  port: 8585
+  port: 8586
 
 # MyBatis配置
 mybatis:
@@ -8,21 +8,44 @@ mybatis:
   # 加载全局的配置文件
   configuration:
     map-underscore-to-camel-case: true
-    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # mysql配置
 spring:
+#  jta:
+#    enabled: true
+#    transaction-manager-id: jtaTransactionManager
+#    atomikos:
+#      datasource:
+#        master:
+#          xa-properties:
+#            url: jdbc:mysql://127.0.0.1:3306/sc_data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#            driverClassName: com.mysql.cj.jdbc.Driver
+#            type: com.zaxxer.hikari.HikariDataSource
+#            jdbc-url: jdbc:mysql://127.0.0.1:3306/sc_data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#            username: root
+#            password: 'root'
+#
+#        slave1:
+#          xa-properties:
+#            driverClassName: com.mysql.cj.jdbc.Driver
+#            type: com.zaxxer.hikari.HikariDataSource
+#            jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+#            username: root
+#            password: 'YX19980904'
+
+
   datasource:
     master:
       driverClassName: com.mysql.cj.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
-      jdbc-url: jdbc:mysql://127.0.0.1:3306/multi-source-01?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/sc_data?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: 'root'
     slave1:
       driverClassName: com.mysql.cj.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
-      jdbc-url: jdbc:mysql://xxxxx:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
+      jdbc-url: jdbc:mysql://192.144.220.234:3306/multi-source-02?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=GMT%2B8
       username: root
       password: 'YX19980904'
 
@@ -42,5 +65,4 @@ spring:
       # 每次运行程序，没有表时会创建表，如果对象发生改变会更新表结构，原有数据不会清空，只会更新
       # 逆向工程 也就是先有实体 在生成表
       # 由于ddl-auto不能同时指定多个属性， 只能在create, create-drop, update, validate, none中选择一个属性
-      ddl-auto: update
-
+      ddl-auto: none
